@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">API</string>
+
+    <string-array name="name">
+        <item>Cupcake</item>
+        <item>Donut</item>
+        <item>Eclair</item>
+    </string-array>
 </resources>

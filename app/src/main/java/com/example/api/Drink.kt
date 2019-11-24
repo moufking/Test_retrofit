@@ -1,3 +1,3 @@
 package com.example.api
 
-class Drink(val strDrink: String, val strDrinkThumb: String, val idDrink: String )
+data class Drink(var strDrink: String, var strDrinkThumb: String, var idDrink: String )

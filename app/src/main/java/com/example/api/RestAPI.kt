@@ -8,7 +8,7 @@ import retrofit2.Call
 
 public interface CocktailService {
 
-    @GET("filter.php?c=Cocktail")
+    @GET("/courses")
     fun getTanStops(): Call<List<Drink>>
 
 
