@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.recyclerview_row.*
 
-class DrinkAdapter(val items: Array<Drink>) : RecyclerView.Adapter<DrinkAdapter.ViewHolder>()
+class DrinkAdapter(val items: List<Drink>) : RecyclerView.Adapter<DrinkAdapter.ViewHolder>()
 {
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
         override val containerView: View?
@@ -17,9 +18,9 @@ class DrinkAdapter(val items: Array<Drink>) : RecyclerView.Adapter<DrinkAdapter.
             //la fonction qui permet de lier les données à la vue
             with(drink) {
                 //itemView.andVersionTxt.text = "$name"
-                name.text = strDrink
-                description.text = strDrinkThumb
-                t.text =idDrink
+                title.text = strDrink
+                Picasso.get().load(strDrinkThumb).placeholder(R.drawable.search).into(share_photo)
+                prix.text =idDrink
             }
         }
 

@@ -14,10 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-    private val BaseUrl = "https://www.thecocktaildb.com/api/json/v1/1/"
     val andVersionArray = arrayOf(Drink("Banana","Mouffi", "ioio"), Drink("Banana","Donner 2", "dfsnvdfs"))
-
-    //val andVersionArray = mutableListOf<Drink>()
 
     private lateinit var linearLayoutManager: LinearLayoutManager
 
@@ -29,41 +26,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
        list.layoutManager = LinearLayoutManager(this)
-        list.adapter = DrinkAdapter(andVersionArray)
+        //list.adapter = DrinkAdapter(andVersionArray)
 
-        //use retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BaseUrl)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
+        val service =  CocktailService.Factory.create()
+        val list_cocktails = service.getCocktails()
 
-        val service = retrofit.create(ITanApi::class.java)
-        val tanStops = service.getTanStops()
+        //click.setOnClickListener {
 
-        click.setOnClickListener {
+            list_cocktails.enqueue(object : Callback<Drinks> {
 
-            tanStops.enqueue(object : Callback<List<Drinks>> {
-
-                override fun onResponse(call: Call<List<Drinks>>, response: Response<List<Drinks>>) {
+                override fun onResponse(call: Call<Drinks>, response: Response<Drinks>) {
 
                     val allCourse = response.body()
-                    Log.d("tatat", response.body().toString())
-                    if (allCourse != null) {
 
-                        for (c in allCourse) {
-                            Log.d("toto", "qlo")
-                        }
-                        message.update(response.body().toString())
-                    }
-                    message.update(response.body().toString())
+                   // message.update (allCourse!!.drinks.toString())
+                    list.adapter = DrinkAdapter(allCourse!!.drinks)
                 }
-                override fun onFailure(call: Call<List<Drinks>>, t: Throwable) {
-                    //Log.e("TAN", "Error : $t")
-                    message.update("Erreur")
+                override fun onFailure(call: Call<Drinks>, t: Throwable) {
+                    Log.e("TAN", "Error : $t")
+                    //message.update("Erreur")
                 }
 
             })
-        }
+        //}
 
     }
 
